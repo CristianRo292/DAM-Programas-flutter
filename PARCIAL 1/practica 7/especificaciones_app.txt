@@ -1,0 +1,12 @@
+hacer una app, que en la ventana principal se divida en dos partes iguales, es decir, cada sección el 50% de la pantalla. En la primera sección aparecerá, centrado y con un margen de 20px una tarjeta (card) con una caja de texto y un botón.
+En la segunda sección, aparecerá centrado, un wiget text o texto, con las siguientes carcateristicas:
+-tamaño de texto 34 en negrita y con tipo de letra cominsait de color azul.
+
+La aplicación solo validara que la caja de texto no este bacia; esto lo realizaa el botón y mostrara en el texto si esta basia o no esta basia. 
+
+
+
+
+
+
+Si al presionar el botón indica en el mensaje que la caja no esta basia, aparecerá una alerta, que al presionar el botón aceptar, solo si es numero lo enviara a una segunda ventana, que se mostrara al centro de la pantalla, si no es numero, solo se serrara el mensaje (o alerta). 
