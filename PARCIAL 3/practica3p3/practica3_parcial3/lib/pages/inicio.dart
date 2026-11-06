@@ -16,7 +16,8 @@ class Inicio extends StatefulWidget
 
 class ContVentana extends State<Inicio>
 {
-  TextEditingController ctrTelefono = TextEditingController();
+  final _keyForm = GlobalKey<FormState>();
+  // TextEditingController ctrTelefono = TextEditingController();
   // metodo par alas notificaciones 
   void _snackbarNot({String contenido = "Error"})
   {
@@ -28,17 +29,32 @@ class ContVentana extends State<Inicio>
       );
   }
 
-  void _vTelefono()
-  {
-    String TelefonoStr = ctrTelefono.text;
+  // void _vTelefono()
+  // {
+  //   String TelefonoStr = ctrTelefono.text;
 
-    if (!RegExp(r"^\+52\d{10}$").hasMatch(TelefonoStr))
+  //   if (!RegExp(r"^\+52\d{10}$").hasMatch(TelefonoStr))
+  //   {
+  //     _snackbarNot(contenido: "Telefono no valido");
+  //     return;
+  //   }
+  //   _snackbarNot(contenido: "Telefono SI 😀 Valido");
+  // }
+  String ? _VTelefono(String ? valor)
+  {
+    if (valor == null || valor.isEmpty)
     {
-      _snackbarNot(contenido: "Telefono no valido");
-      return;
+      return 'Ingresa el Telefono';
     }
-    _snackbarNot(contenido: "Telefono SI 😀 Valido");
+    if (!RegExp(r"^\+52\d{10}$").hasMatch(valor))
+    {
+      // _snackbarNot(contenido: "Correo no valido");
+      return "Ingrese un Telefono valido";
+    }
+    return null;
+
   }
+
 
 
 
@@ -50,48 +66,62 @@ class ContVentana extends State<Inicio>
       body: Card(
         elevation: 12,
         color: const Color.fromARGB(255, 223, 245, 224),
-        child: Column(
-          children: [
-            Expanded(child: Center(child: Text("Validar Telefono", style: vEncabezados(sizeTex: 40),))),
-            Expanded(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: TextField(
-                      controller: ctrTelefono,
-                      decoration: InputDecoration(
-                        labelText: "Escribe el Telefono",
-                        hintText: "Ingresa el telefono, empezando con +52",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5)
+        child: Form(
+          key: _keyForm,
+          child: Column(
+            children: [
+              Expanded(child: Center(child: Text("Validar Telefono", style: vEncabezados(sizeTex: 40),))),
+              Expanded(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: double.infinity,
+                        child: TextFormField(
+                          validator: _VTelefono,
+                        // controller: ctrTelefono,
+                        decoration: InputDecoration(
+                          labelText: "Escribe el Telefono",
+                          hintText: "Ingresa el telefono, empezando con +52",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20,),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _vTelefono, 
-                        child: Text("Validar"),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightGreen,
-                          foregroundColor: Colors.white
-                        ) ,
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: ()
+                          {
+                            if (_keyForm.currentState?.validate() ?? false)
+                            {
+
+                            }
+                            else 
+                            {
+                              _snackbarNot(contenido: "Ingresa los datos correctos");
+                            }
+                          }, 
+                          child: Text("Validar"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen,
+                            foregroundColor: Colors.white
+                          ) ,
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            
-          ],
+              
+            ],
+          ),
         ),
       ),
       
